@@ -1,0 +1,5 @@
+OOD detection FPR at 95% TPR: 1.0
+OOD detection AUCROC: 0.5165875,
+OOD detection AUCPR ID: 0.6361169938621486,
+OOD detection AUCPR ID: 0.4600059675444184,
+

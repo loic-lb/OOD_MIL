@@ -1,0 +1,22 @@
+cuda: true
+dataset: pcam
+epochs: 20
+experiment: results
+freeze_tile_embedding: true
+lr: 0.0005
+mean_bag_length: 10
+model: gated_attention
+neg_class_id: null
+no_cuda: false
+num_bags_test:
+- 200
+num_bags_train:
+- 10000
+params_config: null
+reg: 0.0001
+seed: 1
+target_class_id:
+- 1
+test_size_histo: 0.2
+val_size: 0.2
+var_bag_length: 2

@@ -1,0 +1,13 @@
+baseline:
+    temperature: 1
+odin:
+    temperature: 1000
+    noise: 0.0014
+ebo:
+    temperature: 1
+dice:
+    p: 90
+mls: {}
+knn:
+    K: 50
+    
