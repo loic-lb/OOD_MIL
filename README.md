@@ -38,7 +38,7 @@ python training.py --params_config <params_config>
 
 where ```<params_config>``` is the path to the configuration file to use. All the configuration files are in the 
 ```./results``` folder along with the results of the experiments. The trained models weights can directly be found
-[here]().
+[here](https://drive.google.com/drive/folders/1zKSeAMSVAl3tkwDVO_QUfnxYYjFPx0nu?usp=sharing).
 
 ## Performance evaluation on the OOD detection
 
