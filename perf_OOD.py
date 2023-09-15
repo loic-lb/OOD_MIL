@@ -194,7 +194,7 @@ def test(save_location, OOD=False):
         ground_truths.extend(bag_label.detach().cpu().numpy())
         conf_scores.extend(conf.detach().cpu().numpy())
 
-        if batch_idx < 10 and OOD and "attention" in args.model:  # plot bag labels and instance labels for first 10 bags
+        if OOD and "attention" in args.model:  # plot bag labels and instance labels for first 10 bags
             _, predicted_label = torch.max(pred, axis=1)
             bag_level = (bag_label.cpu().data.numpy()[0], int(predicted_label.cpu().data.numpy()[0]))
             instance_level = list(zip(instance_labels.numpy()[0].tolist(),
@@ -248,4 +248,4 @@ if __name__ == "__main__":
         print(f"OOD detection FPR at 95% TPR: {ood_detection_metrics[0]}\n"
               f"OOD detection AUCROC: {ood_detection_metrics[1]},\n"
               f"OOD detection AUCPR ID: {ood_detection_metrics[2]},\n"
-              f"OOD detection AUCPR ID: {ood_detection_metrics[3]},\n", file=f)
+              f"OOD detection AUCPR OOD: {ood_detection_metrics[3]},\n", file=f)
