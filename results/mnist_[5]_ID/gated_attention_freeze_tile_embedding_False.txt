@@ -1,4 +1,4 @@
-Testing auc score: 0.9789749999999999,
-Testing f1 score: 0.9324995781223633,
-Testing bac score: 0.9325000000000001,
+Testing auc score: 0.986175,
+Testing f1 score: 0.9474970467088774,
+Testing bac score: 0.9475,
 

@@ -90,7 +90,7 @@ val_dataset = dataset_fct(dataset=args.dataset,
                           mean_bag_length=args.mean_bag_length,
                           var_bag_length=args.var_bag_length,
                           num_bag=[int(num_bag * args.val_size) for num_bag in args.num_bags_train],
-                          seed=args.seed,
+                          seed=args.seed+1, # to not sample the same bags as in the training set
                           mode="val")
 
 train_loader = data_utils.DataLoader(train_dataset,

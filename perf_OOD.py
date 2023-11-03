@@ -58,6 +58,21 @@ loader_kwargs = {'num_workers': 0, 'pin_memory': True, 'generator': g, "worker_i
 
 dataset_fct_ID = partial(DatasetBagsHisto, test_size=args.test_size_histo) if args.dataset == 'pcam' else DatasetBags
 
+if args.ood_detection_method in ["dice", "knn"]:
+    train_loader_ID = data_utils.DataLoader(dataset_fct_ID(
+        dataset=args.dataset,
+        target_class_id=args.target_class_id,
+        neg_class_id=args.neg_class_id,
+        mean_bag_length=args.mean_bag_length,
+        var_bag_length=args.var_bag_length,
+        num_bag=args.num_bags_train,
+        seed=args.seed,
+        mode="train",
+        perf_aug=True),
+        batch_size=1,
+        shuffle=True,
+        **loader_kwargs)
+    
 test_loader_ID = data_utils.DataLoader(dataset_fct_ID(
         dataset=args.dataset,
         target_class_id=args.target_class_id,
@@ -115,19 +130,6 @@ with open(args.ood_detection_method_params) as file:
     config = yaml.safe_load(file)
     
 ood_detection_method = OOD_detection_methods_dict[args.ood_detection_method](**config[args.ood_detection_method])
-if args.ood_detection_method in ["dice", "knn"]:
-    train_loader_ID = data_utils.DataLoader(dataset_fct_ID(
-        dataset=args.dataset,
-        target_class_id=args.target_class_id,
-        neg_class_id=args.neg_class_id,
-        mean_bag_length=args.mean_bag_length,
-        var_bag_length=args.var_bag_length,
-        num_bag=args.num_bags_train,
-        seed=args.seed,
-        mode="train"),
-        batch_size=1,
-        shuffle=True,
-        **loader_kwargs)
     
 
 def visualize_test_samples(data, attention_weights, bag_level, conf, batch_idx, mean, std, save_location):
@@ -194,7 +196,7 @@ def test(save_location, OOD=False):
         ground_truths.extend(bag_label.detach().cpu().numpy())
         conf_scores.extend(conf.detach().cpu().numpy())
 
-        if OOD and "attention" in args.model:  # plot bag labels and instance labels for first 10 bags
+        if batch_idx < 10 and OOD and "attention" in args.model:  # plot bag labels and instance labels for first 10 bags
             _, predicted_label = torch.max(pred, axis=1)
             bag_level = (bag_label.cpu().data.numpy()[0], int(predicted_label.cpu().data.numpy()[0]))
             instance_level = list(zip(instance_labels.numpy()[0].tolist(),

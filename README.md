@@ -1,4 +1,4 @@
-# On the dection of Out-Of-Distribution samples in Multiple Instance Learning
+# On the detection of Out-Of-Distribution samples in Multiple Instance Learning
 
 This repository contains the code to reproduce the results of the paper "On the detection of Out-Of-Distribution 
 samples in Multiple Instance Learning".

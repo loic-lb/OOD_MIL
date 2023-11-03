@@ -37,7 +37,9 @@ class ODIN:
         output = net.pred(pertubated_data)
         output = output / self.temperature
 
-        nnOutput = torch.softmax(output, dim=1)
+        nnOutput = output.detach()
+        nnOutput = nnOutput - nnOutput.max(dim=1, keepdim=True).values
+        nnOutput = torch.exp(nnOutput) / torch.exp(nnOutput).sum(dim=1, keepdim=True)
         conf = torch.max(nnOutput, dim=1)[0]
 
         return conf

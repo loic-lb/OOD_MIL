@@ -4,7 +4,7 @@ from sklearn import metrics
 
 
 def compute_all_metrics(conf, label, pred, plot_roc_curve=False, save_path=None):
-    np.set_printoptions(precision=3)
+    np.set_printoptions(precision=4)
     recall = 0.95
     fpr, thresh = fpr_recall(conf, label, recall)
     auroc, aupr_in, aupr_out = auc(conf, label, plot_roc_curve, save_path)
@@ -15,9 +15,6 @@ def compute_all_metrics(conf, label, pred, plot_roc_curve=False, save_path=None)
     ccr_4 = ccr_fpr(conf, 0.0001, pred, label)
 
     accuracy = acc(pred, label)
-
-    results1 = np.array(
-        [fpr, auroc, aupr_in, aupr_out, ccr_4, ccr_3, ccr_2, ccr_1, accuracy])
 
     results = [
         fpr, auroc, aupr_in, aupr_out, ccr_4, ccr_3, ccr_2, ccr_1, accuracy

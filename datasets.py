@@ -129,6 +129,7 @@ class DatasetBags(data_utils.Dataset):
             transform_ops = transforms.Compose([self.train_transforms, self.transform_ops])
         else:
             transform_ops = self.transform_ops
+        print(transform_ops)
         if self.dataset_name in ["textures", "svhn"]:
             dataset = dataset_fct('./datasets',
                                   split="train" if self.mode != "test" else "test",
@@ -203,7 +204,7 @@ class DatasetBagsHisto(DatasetBags):
         """
         dataset_fct = dataset_dict[self.dataset_name][0]
         dataset_path = dataset_dict[self.dataset_name][1]
-        if self.mode == "train":
+        if self.perf_aug:
             transform_ops = transforms.Compose([self.train_transforms, self.transform_ops])
         else:
             transform_ops = self.transform_ops
@@ -226,22 +227,18 @@ class DatasetBagsHisto(DatasetBags):
             return self._data_to_bags(all_imgs, all_labels)
 
         elif self.dataset_name == "pcam":
-            x_train, y_train = self._process_pcam('./datasets/PCAM/camelyonpatch_level_2_split_train_x.h5',
-                                                  './datasets/PCAM/camelyonpatch_level_2_split_train_y.h5',
-                                                  transform_ops)
-
-            x_test, y_test = self._process_pcam('./datasets/PCAM/camelyonpatch_level_2_split_test_x.h5',
-                                                './datasets/PCAM/camelyonpatch_level_2_split_test_y.h5',
-                                                transform_ops)
-
-            if self.mode == "test":
-                all_imgs = x_test
-                all_labels = y_test
+            print(transform_ops)
+            
+            if self.mode != "test":
+                x, y = self._process_pcam('./datasets/PCAM/camelyonpatch_level_2_split_train_x.h5',
+                                          './datasets/PCAM/camelyonpatch_level_2_split_train_y.h5',
+                                          transform_ops)
             else:
-                all_imgs = x_train
-                all_labels = y_train
+                x, y = self._process_pcam('./datasets/PCAM/camelyonpatch_level_2_split_test_x.h5',
+                                          './datasets/PCAM/camelyonpatch_level_2_split_test_y.h5',
+                                          transform_ops)
 
-            return self._data_to_bags(all_imgs, all_labels)
+            return self._data_to_bags(x, y)
 
         else:
             raise NotImplementedError
